@@ -1,0 +1,116 @@
+body{
+    background: linear-gradient(to left,#dda546,#ff5d00);
+    margin: 0px;
+    padding: 0px;
+}
+
+::selection{
+    background: transparent;
+}
+
+h4{
+    font-size: 30;
+    line-height: 1px;
+    font-family: 'Agency FB', cursive !important;
+}
+
+.color1{
+    color: aquamarine;
+}
+
+.color2{
+    color: #d9ead3 ;
+}
+
+.card{
+    color:#e1e421 ;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 300px;
+    width: 400px;
+    background: #c7c7c7;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%)perspective(2000px);
+    transition: 1s;
+    box-shadow: inset 300px 0 50px rgba(0, 0, 0, .5), 20px 0 60px rgba(0, 0, 0, .5);
+}
+
+.card:hover{
+    transform: translate(-50%, -50%)perspective(2000px) rotate(15deg)scale(1.2);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .5),0 10px 100px rgba(0, 0, 0, .5);
+}
+
+.card:before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #bac1ba;
+    transform-origin:bottom ;
+    transform: skewX(45deg);
+}
+
+.card:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 5px;
+    height: 100%;
+    background: #92a29c;
+    transform-origin: left;
+    transform: skewY(45deg);
+}
+
+.card .imagebox{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-origin: left;
+    transition: .7s;
+}
+
+.card .bark{
+    position: absolute;
+    background: #c7c7c7;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: .7s;
+}
+
+.card .imagebox img{
+    min-width: 250px;
+    max-height: 400px;
+}
+
+.card:hover .imagebox{
+    transform: rotateY(-135deg);
+}
+
+.card:hover .bark{
+    opacity: 1;
+    transition: .6s;
+    box-shadow: 300px 200px 100px rgba(0, 0, 0, .4) inset;
+}
+
+.card .detail{
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 0 0 0 10px;
+    z-index: -1;
+    margin-top: 70px;
+}
+
+.card .detail h4{
+    text-align: center;
+}
+
+.text-right{
+    text-align: right;
+}
