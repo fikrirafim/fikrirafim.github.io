@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fikri Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">FIKRI</div>
+  <ul class="nav-links">
+    <li><a href="#about">About Me</a></li>
+    <li><a href="#works">3D Result</a></li>
+    <li><a href="#games">Game Project</a></li>
+    <li><a href="#contact">Get In Touch</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="drawer">
+  <a href="#about" onclick="closeMenu()">About Me</a>
+  <a href="#works" onclick="closeMenu()">3D Result</a>
+  <a href="#games" onclick="closeMenu()">Game Project</a>
+  <a href="#contact" onclick="closeMenu()">Get In Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">3D Artist &amp; Game Developer</div>
+    <div class="hero-name">FIKRI</div>
+    <div class="hero-sub">Portfolio — Crafting worlds, one render at a time</div>
+    <a class="hero-cta" href="#works">View My Work &rarr;</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 &mdash; About Me</div>
+  <div class="about-grid">
+    <div class="about-number">FK</div>
+    <div class="about-text">
+      <h2>Turning Vision Into Reality</h2>
+      <p>Hi, I'm Fikri — a 3D artist and game developer passionate about creating immersive visual experiences. I blend technical precision with artistic intuition to craft renders and games that leave a lasting impression.</p>
+      <p>From high-fidelity 3D renders to fully playable game projects, every piece I create carries a story.</p>
+      <div class="about-tags">
+        <span class="tag">Blender</span>
+        <!-- <span class="tag">Cinema 4D</span> -->
+        <span class="tag">Unity</span>
+        <!-- <span class="tag">Unreal Engine</span> -->
+        <!-- <span class="tag">Substance Painter</span> -->
+        <!-- <span class="tag">After Effects</span> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3D WORKS -->
+<section id="works">
+  <div class="section-label">02 &mdash; 3D Result</div>
+  <div class="works-grid">
+
+    <div class="work-card" onclick="goToGallery('hojiro')">
+      <div class="work-visual">
+        <img src="img/HOJIRO/HOJIROOVERVIEW.png" alt="Hojiro">
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info"><div class="work-cat">Character</div><div class="work-title">Hojiro</div></div>
+    </div>
+
+    <div class="work-card" onclick="goToGallery('ironfall')">
+      <div class="work-visual">
+        <img src="img/IRONFALL/IRONFALLOVERVIEW.png" alt="Ironfall">
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info"><div class="work-cat">Weapon</div><div class="work-title">Ironfall</div></div>
+    </div>
+
+    <div class="work-card" onclick="goToGallery('ironshard')">
+      <div class="work-visual">
+        <img src="img/IRONSHARD/IronShard_LowPoly.png" alt="Troll Hunter">
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info"><div class="work-cat">Weapon</div><div class="work-title">Troll Hunter</div></div>
+    </div>
+
+    <div class="work-card" onclick="goToGallery('room')">
+      <div class="work-visual">
+        <img src="img/room/ROOMOVERVIEW.png" alt="Minimalist Room">
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info"><div class="work-cat">Room</div><div class="work-title">Minimalist Room</div></div>
+    </div>
+
+    <div class="work-card" onclick="goToGallery('primalowl')">
+      <div class="work-visual">
+        <img src="img/PRIMALOWL/PRIMAL_OWL.png" alt="Primal Owl">
+      </div>
+      <div class="work-overlay"></div>
+      <div class="work-info"><div class="work-cat">Character</div><div class="work-title">Primal Owl</div></div>
+    </div>
+
+    <div class="work-card" style="border-style:dashed; display:flex; align-items:center; justify-content:center; cursor:default;">
+      <div style="text-align:center; color:var(--muted);">
+        <div style="font-size:2rem; margin-bottom:0.5rem; opacity:0.3;">+</div>
+        <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;">More Coming Soon</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GAME PROJECTS -->
+<section id="games">
+  <div class="section-label">03 &mdash; Game Project</div>
+  <div class="games-list">
+
+    <div class="game-row" onclick="goToGame('shooterroyale')">
+      <div class="game-left">
+        <div class="game-num">01</div>
+        <div>
+          <div class="game-name">3D Shooter Royale</div>
+          <div class="game-platform">Unity &bull; 3D Action</div>
+        </div>
+      </div>
+      <div class="game-right">
+        <span class="game-badge">In Progress</span>
+        <span class="arrow">→</span>
+      </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">04 &mdash; Get In Touch</div>
+  <div class="contact-big">Let's Build<br>Something <span>Epic</span></div>
+  <div class="contact-sub">Open for freelance work, collaborations, and creative projects.</div>
+  <div class="contact-form">
+    <input type="text" placeholder="Your Name"/>
+    <input type="email" placeholder="Your Email"/>
+    <textarea placeholder="Tell me about your project..."></textarea>
+    <button class="submit-btn">Send Message</button>
+  </div>
+  <div class="contact-socials">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">ArtStation</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Fikri — All rights reserved</div>
+  <div>Designed with precision</div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const h = document.getElementById('hamburger');
+    const d = document.getElementById('drawer');
+    h.classList.toggle('open');
+    d.classList.toggle('open');
+    document.body.style.overflow = d.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleMenu() {
+    const h = document.getElementById('hamburger');
+    const d = document.getElementById('drawer');
+    h.classList.toggle('open');
+    d.classList.toggle('open');
+    document.body.style.overflow = d.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function goToGallery(project) {
+    window.location.href = 'gallery.html?project=' + project;
+  }
+    function toggleMenu() {
+    const h = document.getElementById('hamburger');
+    const d = document.getElementById('drawer');
+    h.classList.toggle('open');
+    d.classList.toggle('open');
+    document.body.style.overflow = d.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function goToGallery(project) {
+    window.location.href = 'gallery.html?project=' + project;
+  }
+
+  function goToGame(game) {
+    window.location.href = 'games.html?game=' + game;
+  }
+
+
+</script>
+
+</body>
+</html>

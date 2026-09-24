@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Game Project — Fikri Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body class="gallery-page">
+
+<!-- HEADER -->
+<header class="gallery-header">
+  <a href="index.html" class="back-btn">&larr; Back</a>
+  <div class="gallery-brand">FIKRI</div>
+</header>
+
+<!-- HERO TITLE -->
+<section class="gallery-hero">
+  <div class="gallery-eyebrow" id="gamePlatform">Game Project</div>
+  <h1 class="gallery-title" id="gameTitle">Game</h1>
+  <p class="gallery-desc" id="gameDesc">Loading...</p>
+
+  <div class="game-meta" id="gameMeta">
+    <!-- Info tambahan akan diisi lewat JS -->
+  </div>
+</section>
+
+<!-- GRID SCREENSHOTS -->
+<section class="gallery-grid-section">
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Screenshot akan di-inject lewat JS -->
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(event, -1)" aria-label="Previous">&#10094;</button>
+  <img src="" alt="" id="lightboxImg" class="lightbox-img"/>
+  <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(event, 1)" aria-label="Next">&#10095;</button>
+</div>
+
+<footer>
+  <div>© 2026 Fikri — All rights reserved</div>
+  <div>Designed with precision</div>
+</footer>
+
+<script>
+  /* ============================================
+     DATA GAME PROJECT
+     Ganti path gambar sesuai folder screenshot-mu.
+  ============================================ */
+  const games = {
+    shooterroyale: {
+      title: "Shooter Royale",
+      platform: "Unity • 3D Shooter",
+      status: "In Progress",
+      role: "Programmer",
+      year: "2026",
+      desc: "Battle royale with classic design mechanic and simple AI",
+      images: [
+        "img/3DSHOOTERROYALE/3DSHOOTERROYALE_1.jpeg",
+        "img/3DSHOOTERROYALE/3DSHOOTERROYALE_2.jpeg",
+        "img/3DSHOOTERROYALE/3DSHOOTERROYALE_3.jpeg",
+      ]
+    },
+    // voidrunner: {
+    //   title: "Void Runner",
+    //   platform: "Unreal Engine • Platformer",
+    //   status: "Completed",
+    //   role: "Solo Developer",
+    //   year: "2024",
+    //   desc: "A fast-paced platformer set in a surreal void dimension. Features tight controls, challenging level design, and stylized visuals.",
+    //   images: [
+    //     "img/GAMES/VOIDRUNNER/screenshot_01.png",
+    //     "img/GAMES/VOIDRUNNER/screenshot_02.png",
+    //     "img/GAMES/VOIDRUNNER/screenshot_03.png"
+    //   ]
+    // },
+    // neondrift: {
+    //   title: "Neon Drift",
+    //   platform: "Unity • Racing",
+    //   status: "Prototype",
+    //   role: "Gameplay Programmer",
+    //   year: "2024",
+    //   desc: "A futuristic arcade racer with neon-soaked tracks, drift mechanics, and a synthwave aesthetic. Prototype stage.",
+    //   images: [
+    //     "img/GAMES/NEONDRIFT/screenshot_01.png",
+    //     "img/GAMES/NEONDRIFT/screenshot_02.png"
+    //   ]
+    // }
+  };
+
+  /* ============================================
+     LOGIC
+  ============================================ */
+  const params = new URLSearchParams(window.location.search);
+  const gameKey = params.get('game');
+  const game = games[gameKey];
+
+  const grid = document.getElementById('galleryGrid');
+  let currentIndex = 0;
+  let imageList = [];
+
+  if (!game) {
+    document.getElementById('gameTitle').textContent = "Game Not Found";
+    document.getElementById('gameDesc').textContent = "The game project you're looking for doesn't exist.";
+  } else {
+    document.title = game.title + " — Fikri Portfolio";
+    document.getElementById('gameTitle').textContent = game.title;
+    document.getElementById('gamePlatform').textContent = game.platform;
+    document.getElementById('gameDesc').textContent = game.desc;
+
+    // Meta info (status, role, year)
+    document.getElementById('gameMeta').innerHTML = `
+      <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value">${game.status}</span></div>
+      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">${game.role}</span></div>
+      <div class="meta-item"><span class="meta-label">Year</span><span class="meta-value">${game.year}</span></div>
+      <div class="meta-item"><span class="meta-label">Screenshots</span><span class="meta-value">${game.images.length}</span></div>
+    `;
+
+    imageList = game.images;
+
+    // Render screenshots
+    imageList.forEach((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${game.title} screenshot ${i+1}" loading="lazy"/>`;
+      item.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(item);
+    });
+  }
+
+  /* LIGHTBOX FUNCTIONS */
+  function openLightbox(index) {
+    currentIndex = index;
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    img.src = imageList[currentIndex];
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target.tagName === 'IMG' && e.target.id !== 'lightboxImg') return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(e, direction) {
+    e.stopPropagation();
+    currentIndex = (currentIndex + direction + imageList.length) % imageList.length;
+    document.getElementById('lightboxImg').src = imageList[currentIndex];
+  }
+
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(e, -1);
+    if (e.key === 'ArrowRight') navigateLightbox(e, 1);
+  });
+</script>
+
+</body>
+</html>

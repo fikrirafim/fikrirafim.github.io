@@ -1,0 +1,824 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --card: #161616;
+  --border: rgba(255,255,255,0.08);
+  --white: #f5f5f0;
+  --muted: rgba(245,245,240,0.45);
+  --accent: #e8d5b0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 0.5px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--white); }
+
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(10,10,10,0.97);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.nav-drawer.open { display: flex; }
+
+.nav-drawer a {
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+
+.nav-drawer a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, rgba(40,35,25,0.6) 0%, var(--black) 70%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 0.5px;
+  background: var(--accent);
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 14vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0.5px solid rgba(245,245,240,0.3);
+  padding: 0.75rem 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  transition: background 0.3s, border-color 0.3s;
+  background: transparent;
+}
+
+.hero-cta:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-scroll {
+  position: absolute;
+  right: 4rem;
+  bottom: 5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scroll-line {
+  width: 0.5px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+}
+
+/* SECTIONS */
+section { padding: 7rem 4rem; }
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: var(--border);
+}
+
+/* ABOUT */
+#about { border-top: 0.5px solid var(--border); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 9rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  user-select: none;
+}
+
+.about-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.about-text p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.tag {
+  border: 0.5px solid var(--border);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* 3D WORKS */
+#works {
+  border-top: 0.5px solid var(--border);
+  background: var(--dark);
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.work-card {
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  aspect-ratio: 4/5;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.work-card:hover { border-color: rgba(255,255,255,0.25); }
+.work-card:hover .work-overlay { opacity: 1; }
+
+.work-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  opacity: 0.15;
+}
+
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 60%);
+  opacity: 0.7;
+  transition: opacity 0.4s;
+}
+
+.work-info {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+}
+
+.work-cat {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.work-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+}
+
+/* GAME PROJECTS */
+#games { border-top: 0.5px solid var(--border); }
+
+.game-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 0;
+  border-bottom: 0.5px solid var(--border);
+  cursor: pointer;
+  transition: padding-left 0.3s;
+  position: relative;
+}
+
+.game-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: rgba(232,213,176,0.06);
+  transition: width 0.3s;
+}
+
+.game-row:hover::before { width: 100%; }
+.game-row:hover { padding-left: 1.5rem; }
+.game-row:hover .game-num { color: var(--accent); }
+
+.game-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.game-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--muted);
+  min-width: 2.5rem;
+  transition: color 0.3s;
+}
+
+.game-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+}
+
+.game-platform {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+.game-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.game-badge {
+  border: 0.5px solid var(--border);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.arrow {
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+/* CONTACT */
+#contact {
+  border-top: 0.5px solid var(--border);
+  background: var(--dark);
+  text-align: center;
+}
+
+.contact-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.contact-big span { color: var(--accent); }
+
+.contact-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 3rem;
+}
+
+.contact-form {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255,255,255,0.04);
+  border: 0.5px solid var(--border);
+  color: var(--white);
+  padding: 0.9rem 1.2rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  resize: none;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(245,245,240,0.25);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(232,213,176,0.4);
+}
+
+.contact-form textarea { height: 130px; }
+
+.submit-btn {
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  padding: 0.9rem 2.5rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s;
+  align-self: flex-start;
+}
+
+.submit-btn:hover { background: var(--accent); }
+
+.contact-socials {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+}
+
+.contact-socials a {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-socials a:hover { color: var(--white); }
+
+/* FOOTER */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  section { padding: 4rem 1.25rem; }
+
+  .hero { padding: 0 1.25rem 3.5rem; }
+  .hero-sub { font-size: 0.7rem; }
+  .hero-scroll { display: none; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 0; }
+  .about-number { font-size: 5rem; margin-bottom: -1rem; }
+  .about-text h2 { font-size: 1.75rem; }
+
+  .works-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .work-visual { font-size: 2rem; }
+  .work-title { font-size: 0.85rem; }
+  .work-info { padding: 0.6rem; }
+
+  .game-name { font-size: 1.2rem; }
+  .game-badge { display: none; }
+  .game-left { gap: 0.8rem; }
+
+  .submit-btn { width: 100%; text-align: center; align-self: stretch; }
+
+  footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+}
+
+/* ===============================
+   GALLERY PAGE
+=================================*/
+.gallery-page {
+  padding-top: 0;
+}
+
+.gallery-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+
+.gallery-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 0.5px solid var(--border);
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.back-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Gallery Hero */
+.gallery-hero {
+  padding: 9rem 4rem 3rem;
+  max-width: 900px;
+}
+
+.gallery-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gallery-eyebrow::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 0.5px;
+  background: var(--accent);
+}
+
+.gallery-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* Gallery Grid */
+.gallery-grid-section {
+  padding: 2rem 4rem 6rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 0.5px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s, transform 0.4s;
+}
+
+.gallery-item:hover {
+  border-color: rgba(232,213,176,0.4);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(5,5,5,0.96);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border: 0.5px solid var(--border);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 2.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.3s, color 0.3s;
+  z-index: 1;
+}
+
+.lightbox-close:hover { opacity: 1; color: var(--accent); }
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.05);
+  border: 0.5px solid var(--border);
+  color: var(--white);
+  font-size: 1.2rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-nav:hover {
+  background: rgba(232,213,176,0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lightbox-prev { left: 2rem; }
+.lightbox-next { right: 2rem; }
+
+/* Mobile Gallery */
+@media (max-width: 640px) {
+  .gallery-hero { padding: 7rem 1.25rem 2rem; }
+  .gallery-grid-section { padding: 1rem 1.25rem 4rem; }
+  .gallery-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .gallery-header { padding: 1rem 1.25rem; }
+  .back-btn { padding: 0.4rem 0.8rem; font-size: 0.65rem; }
+  .lightbox-prev { left: 0.5rem; }
+  .lightbox-next { right: 0.5rem; }
+  .lightbox-nav { width: 2.5rem; height: 2.5rem; }
+  .lightbox-close { top: 1rem; right: 1rem; font-size: 2rem; }
+}
+
+@media (max-width: 400px) {
+  .hero-name { font-size: 19vw; }
+}
+
+/* ===============================
+   GAME META INFO
+=================================*/
+.game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--border);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.meta-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.meta-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+/* Screenshot gallery pakai aspect ratio lebih lebar untuk game */
+.gallery-page .gallery-item {
+  aspect-ratio: 16/9;
+}
+
+@media (max-width: 640px) {
+  .game-meta {
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  .meta-value { font-size: 0.95rem; }
+}

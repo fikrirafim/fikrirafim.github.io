@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gallery — Fikri Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body class="gallery-page">
+
+<!-- HEADER -->
+<header class="gallery-header">
+  <a href="index.html" class="back-btn">&larr; Back</a>
+  <div class="gallery-brand">FIKRI</div>
+</header>
+
+<!-- HERO TITLE -->
+<section class="gallery-hero">
+  <div class="gallery-eyebrow" id="galleryCategory">3D Result</div>
+  <h1 class="gallery-title" id="galleryTitle">Gallery</h1>
+  <p class="gallery-desc" id="galleryDesc">Loading...</p>
+</section>
+
+<!-- GRID GALLERY -->
+<section class="gallery-grid-section">
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Images akan di-inject lewat JS -->
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(event, -1)" aria-label="Previous">&#10094;</button>
+  <img src="" alt="" id="lightboxImg" class="lightbox-img"/>
+  <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(event, 1)" aria-label="Next">&#10095;</button>
+</div>
+
+<footer>
+  <div>© 2026 Fikri — All rights reserved</div>
+  <div>Designed with precision</div>
+</footer>
+
+<script>
+  /* ============================================
+     DATA PROJECT
+     Tambahkan gambar baru di sini sesuai folder.
+     Path relatif terhadap gallery.html (root).
+  ============================================ */
+  const projects = {
+    hojiro: {
+      title: "Hojiro",
+      category: "Character",
+      desc: "A stylized character design exploring form, silhouette, and material detail. Modeled and rendered in Blender.",
+      cover: "img/HOJIRO/HOJIROOVERVIEW.png",
+      images: [
+        "img/HOJIRO/HOJIROOVERVIEW.png",
+        "img/HOJIRO/hojiro_01.png",
+        "img/HOJIRO/hojiro_02.png",
+        "img/HOJIRO/hojiro_03.png"
+      ]
+    },
+    ironfall: {
+      title: "Ironfall",
+      category: "Weapon",
+      desc: "A fantasy-inspired weapon concept with hard-surface modeling, exploring weight, balance, and detailed ornamentation.",
+      cover: "img/IRONFALL/IRONFALLOVERVIEW.png",
+      images: [
+        "img/IRONFALL/IRONFALLOVERVIEW.png",
+        "img/IRONFALL/IRONFALLDETAIL1.png",
+        "img/IRONFALL/IRONFALLDETAIL2.png",
+        "img/IRONFALL/IRONFALLDETAIL3.png"
+      ]
+    },
+    ironshard: {
+      title: "Troll Hunter",
+      category: "Weapon",
+      desc: "A rugged low-poly weapon designed for stylized game environments. Optimized for real-time rendering.",
+      cover: "img/IRONSHARD/IronShard_LowPoly.png",
+      images: [
+        "img/IRONSHARD/IronShard_LowPoly.png"
+      ]
+    },
+    room: {
+      title: "Minimalist Room",
+      category: "Environment",
+      desc: "An interior environment study focusing on lighting, composition, and minimalistic design language.",
+      cover: "img/room/ROOMOVERVIEW.png",
+      images: [
+        "img/room/ROOMOVERVIEW.png",
+        "img/room/ROOMOTHERPERSPECTIVE.png",
+        "img/room/ROOMDETAIL.png",
+        "img/room/ROOMTABLE.png"
+      ]
+    },
+    primalowl: {
+      title: "Primal Owl",
+      category: "Character",
+      desc: "A creature concept with organic sculpting and detailed feather work. Rendered with dramatic lighting.",
+      cover: "img/PRIMALOWL/PRIMAL_OWL.png",
+      images: [
+        "img/PRIMALOWL/PRIMAL_OWL.png"
+      ]
+    }
+  };
+
+  /* ============================================
+     LOGIC
+  ============================================ */
+  const params = new URLSearchParams(window.location.search);
+  const projectKey = params.get('project');
+  const project = projects[projectKey];
+
+  const grid = document.getElementById('galleryGrid');
+  let currentIndex = 0;
+  let imageList = [];
+
+  if (!project) {
+    document.getElementById('galleryTitle').textContent = "Project Not Found";
+    document.getElementById('galleryDesc').textContent = "The project you're looking for doesn't exist. Please go back and try again.";
+  } else {
+    document.title = project.title + " — Fikri Portfolio";
+    document.getElementById('galleryTitle').textContent = project.title;
+    document.getElementById('galleryCategory').textContent = project.category;
+    document.getElementById('galleryDesc').textContent = project.desc;
+
+    imageList = project.images;
+
+    // Render semua gambar
+    imageList.forEach((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<img src="${src}" alt="${project.title} ${i+1}" loading="lazy"/>`;
+      item.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(item);
+    });
+  }
+
+  /* LIGHTBOX FUNCTIONS */
+  function openLightbox(index) {
+    currentIndex = index;
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    img.src = imageList[currentIndex];
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    // Hanya tutup jika klik di area background atau tombol close
+    if (e && e.target.tagName === 'IMG' && e.target.id !== 'lightboxImg') return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(e, direction) {
+    e.stopPropagation();
+    currentIndex = (currentIndex + direction + imageList.length) % imageList.length;
+    document.getElementById('lightboxImg').src = imageList[currentIndex];
+  }
+
+  // Navigasi keyboard
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(e, -1);
+    if (e.key === 'ArrowRight') navigateLightbox(e, 1);
+  });
+</script>
+
+</body>
+</html>
