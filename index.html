@@ -151,15 +151,23 @@
   <div class="section-label">04 &mdash; Get In Touch</div>
   <div class="contact-big">Let's Build<br>Something <span>Epic</span></div>
   <div class="contact-sub">Open for freelance work, collaborations, and creative projects.</div>
-  <div class="contact-form">
-    <input type="text" placeholder="Your Name"/>
-    <input type="email" placeholder="Your Email"/>
-    <textarea placeholder="Tell me about your project..."></textarea>
-    <button class="submit-btn">Send Message</button>
-  </div>
+
+  <form class="contact-form" id="contactForm" action="https://formspree.io/f/xbglkqzp" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required/>
+    <input type="email" name="email" placeholder="Your Email" required/>
+    <input type="text" name="_subject" placeholder="Subject" style="display:none"/> <!-- optional -->
+    <textarea name="message" placeholder="Tell me about your project..." required></textarea>
+
+    <!-- Anti-spam honeypot (biarkan kosong, bot akan mengisinya) -->
+    <input type="text" name="_gotcha" style="display:none"/>
+
+    <button type="submit" class="submit-btn">Send Message</button>
+    <div class="form-status" id="formStatus"></div>
+  </form>
+
   <div class="contact-socials">
-    <a href="https://www.instagram.com/fikrm27?stkn=M3NpeHZ2cGkyZHk4" target = "_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="https://www.linkedin.com/in/fikri-rafi-maulana-34552b251/" target = "_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://www.instagram.com/fikrm27?stkn=M3NpeHZ2cGkyZHk4" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.linkedin.com/in/fikri-rafi-maulana-34552b251/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
   </div>
 </section>
 
@@ -217,6 +225,44 @@
   function goToGame(game) {
     window.location.href = 'games.html?game=' + game;
   }
+
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = contactForm.querySelector('.submit-btn');
+      const status = document.getElementById('formStatus');
+      const originalText = btn.textContent;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      status.textContent = '';
+      status.className = 'form-status';
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          status.textContent = '✓ Message sent successfully. I\'ll get back to you soon!';
+          status.classList.add('success');
+          contactForm.reset();
+        } else {
+          throw new Error('Failed');
+        }
+      } catch (err) {
+        status.textContent = '✗ Something went wrong. Please try again or email me directly.';
+        status.classList.add('error');
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    });
+  }
+
 
 
 </script>
