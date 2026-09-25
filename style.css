@@ -822,3 +822,19 @@ footer {
   }
   .meta-value { font-size: 0.95rem; }
 }
+
+.form-status {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+  min-height: 1.2rem;
+  transition: opacity 0.3s;
+}
+
+.form-status.success { color: #8fbc8f; }
+.form-status.error   { color: #d67a7a; }
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
